@@ -1,0 +1,13 @@
+bundle:
+  name: medallion_project
+
+targets:
+  dev:
+    workspace:
+      host: https://<your-workspace-url>
+      root_path: /Workspace/dev
+
+  prod:
+    workspace:
+      host: https://<your-workspace-url>
+      root_path: /Workspace/prod
