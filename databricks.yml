@@ -17,22 +17,20 @@ resources:
     medallion_job:
       name: medallion_job
 
-      job_clusters:
-        - job_cluster_key: medallion_cluster
-          new_cluster:
-            spark_version: 15.4.x-scala2.12
-            node_type_id: i3.large
-            num_workers: 1
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
 
       tasks:
         - task_key: bronze
-          job_cluster_key: medallion_cluster
+          environment_key: default
           spark_python_task:
             python_file: ./notebooks/bronze.py
           max_retries: 1
 
         - task_key: silver
-          job_cluster_key: medallion_cluster
+          environment_key: default
           depends_on:
             - task_key: bronze
           spark_python_task:
@@ -40,7 +38,7 @@ resources:
           max_retries: 1
 
         - task_key: gold
-          job_cluster_key: medallion_cluster
+          environment_key: default
           depends_on:
             - task_key: silver
           spark_python_task:
