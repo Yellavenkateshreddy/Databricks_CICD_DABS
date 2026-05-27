@@ -17,18 +17,26 @@ resources:
     medallion_job:
       name: medallion_job
 
+      environments:
+        - environment_key: serverless_env
+          spec:
+            runtime: serverless
+
       tasks:
         - task_key: bronze
+          environment_key: serverless_env
           spark_python_task:
             python_file: ./notebooks/bronze.py
 
         - task_key: silver
+          environment_key: serverless_env
           depends_on:
             - task_key: bronze
           spark_python_task:
             python_file: ./notebooks/silver.py
 
         - task_key: gold
+          environment_key: serverless_env
           depends_on:
             - task_key: silver
           spark_python_task:
